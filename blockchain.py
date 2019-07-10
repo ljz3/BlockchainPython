@@ -1,4 +1,6 @@
 blockchain = []
+open_transactions =[]
+owner = "Kevin"
 
 def get_last_blockchain_value():
 	if len(blockchain) < 1:
@@ -6,14 +8,25 @@ def get_last_blockchain_value():
 	return blockchain[-1]
 
 
-def add_transaction(transaction_amount, last_transaction = [1]):
-	if last_transaction == None:
-		last_transaction = [1]
-	blockchain.append([last_transaction,transaction_amount])
+def add_transaction(sender, recipient, amount = 1.0):
+
+	"""
+	Arguments:
+		:sender: The sender of the coins
+		:recipient: The recipient of the coins
+		:amount: The amount of coins sent with the transaction (default = 1.0)
+	"""
+	transaction = {"sender":sender, "recipient":recipient, "amount": amount}
+	open_transactions.append(transaction)
     
+def mine_block():
+	pass
 
 def get_tx_value():
-    return float(input("Your transaction amount please: "))
+	tx_recipient = input("Enter the recipient of the transaction: ")
+	tx_amount = float(input("Enter the amount please: "))
+	return (tx_recipient,tx_amount)
+
 
 def get_user_choice():
 	return input("Your choice: ")
@@ -54,15 +67,19 @@ while waiting_for_input:
 	user_choice = get_user_choice()
 	
 	if user_choice == "1":
-		tx_amount = get_tx_value()
-		add_transaction(tx_amount, get_last_blockchain_value())
+		tx_data = get_tx_value()
+		add_transaction(tx_data)
+
 	elif user_choice =="2":
 		print_blockchain_elements()
+
 	elif user_choice =="3":
 		if len(blockchain)>=1:
 			blockchain[0] = [2]
+
 	elif user_choice == "4":
 		waiting_for_input=False
+		
 	else:
 		print("Input invalid, please pick from the list")
 

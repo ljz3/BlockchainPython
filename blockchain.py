@@ -8,7 +8,7 @@ def get_last_blockchain_value():
 	return blockchain[-1]
 
 
-def add_transaction(sender, recipient, amount = 1.0):
+def add_transaction(recipient,sender = owner, amount = 1.0):
 
 	"""
 	Arguments:
@@ -68,7 +68,9 @@ while waiting_for_input:
 	
 	if user_choice == "1":
 		tx_data = get_tx_value()
-		add_transaction(tx_data)
+		recipient, amount = tx_data
+		add_transaction(recipient,amount=amount)
+		print(open_transactions)
 
 	elif user_choice =="2":
 		print_blockchain_elements()
@@ -79,7 +81,7 @@ while waiting_for_input:
 
 	elif user_choice == "4":
 		waiting_for_input=False
-		
+
 	else:
 		print("Input invalid, please pick from the list")
 

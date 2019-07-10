@@ -23,6 +23,8 @@ def print_blockchain_elements():
 	for block in blockchain:
 		print("Outputting block")
 		print(block)
+	else:
+		print("-" *20)
 
 
 def verify_chain():
@@ -40,8 +42,9 @@ def verify_chain():
 		block_index+=1
 	return is_valid
 
+waiting_for_input = True
 
-while True:
+while waiting_for_input:
 	print("Please choose")
 	print("1: Add a new transaction value")
 	print("2: Output the transaction blocks")
@@ -59,7 +62,7 @@ while True:
 		if len(blockchain)>=1:
 			blockchain[0] = [2]
 	elif user_choice == "4":
-		break
+		waiting_for_input=False
 	else:
 		print("Input invalid, please pick from the list")
 
@@ -68,6 +71,10 @@ while True:
 	else:
 		print("Invalid!")
 		break
-	
+else:
+	print("User left!")
+
+
+
 
 print("Done!")

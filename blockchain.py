@@ -17,7 +17,7 @@ def get_last_blockchain_value():
 		return None
 	return blockchain[-1]
 
-def verify_transactions(transaction):
+def verify_transaction(transaction):
 	sender_balance = get_balance(transaction["sender"])
 	return sender_balance >= transaction["amount"]
 		
@@ -36,7 +36,7 @@ def add_transaction(recipient,sender = owner, amount = 1.0):
 		"amount": amount
 	}
 
-	if verify_transactions(transaction):
+	if verify_transaction(transaction):
 		open_transactions.append(transaction)
 		participants.add(sender)
 		participants.add(recipient)
@@ -112,6 +112,9 @@ def verify_chain():
 	return True
 
 
+def verify_transactions():
+	return all([verify_transaction(tx) for tx in open_transactions])
+
 waiting_for_input = True
 
 while waiting_for_input:
@@ -121,6 +124,7 @@ while waiting_for_input:
 	print("3: Mine new block")
 	print("4: Manipulate the chain")
 	print("5: Output Participants")
+	print("6: Check transaction validity")
 	print("q: Quit")
 	
 	user_choice = get_user_choice()
@@ -152,6 +156,12 @@ while waiting_for_input:
 
 	elif user_choice == "5":
 		print(participants)
+
+	elif user_choice == "6":
+		if verify_transactions():
+			print("All transactions are valid")
+		else:
+			print("There are invalid transactions")
 
 	elif user_choice == "q":
 		waiting_for_input=False

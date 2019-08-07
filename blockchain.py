@@ -184,6 +184,11 @@ def verify_transactions():
 waiting_for_input = True
 
 while waiting_for_input:
+
+	if not verify_chain():
+		print("Invalid!")
+		break
+
 	print("Please choose")
 	print("1: Add a new transaction value")
 	print("2: Output the transaction blocks")

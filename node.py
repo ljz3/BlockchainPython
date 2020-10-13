@@ -138,8 +138,6 @@ def broadcast_block():
         return jsonify(response), 409
 
 
-
-
 @app.route("/transaction", methods=["POST"])
 def add_transaction():
     if wallet.public_key == None:

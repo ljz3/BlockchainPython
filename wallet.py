@@ -17,7 +17,6 @@ class Wallet:
         self.public_key = public_key
 
 
-
     def save_keys(self):
         if self.public_key != None and self.private_key != None:
             try:

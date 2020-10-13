@@ -137,6 +137,7 @@ class Blockchain:
         # }
         # if self.public_key == None:
         #     return False
+
         transaction = Transaction(sender, recipient,signature, amount)
         if Verification.verify_transaction(transaction, self.get_balance):
             self.__open_transactions.append(transaction)
@@ -161,6 +162,7 @@ class Blockchain:
         if self.public_key == None:
             return None
         last_block = self.__chain[-1]
+
         # Hash the last block (=> to be able to compare it to the stored hash value)
         hashed_block = hash_block(last_block)
         proof = self.proof_of_work()
@@ -168,9 +170,11 @@ class Blockchain:
         reward_transaction = Transaction(
             'MINING', self.public_key, '', MINING_REWARD)
         copied_transactions = self.__open_transactions[:]
+
         for tx in copied_transactions:
             if not Wallet.verify_transaction(tx):
                 return None
+        
         copied_transactions.append(reward_transaction)
         block = Block(len(self.__chain), hashed_block,
                       copied_transactions, proof)
@@ -195,8 +199,10 @@ class Blockchain:
         transactions = [Transaction(tx["sender"], tx["recipient"], tx["signature"], tx["amount"]) for tx in block["transactions"]]
         proof_is_valid = Verification.valid_proof(transactions[:-1], block["previous_hash"], block["proof"])
         hashes_match = hash_block(self.chain[-1] == block["previous_hash"])
+
         if not proof_is_valid or not hashes_match:
             return False
+
         converted_block = Block(block["index"], block["previous_hash"], transactions, block["proof"], block["timestamp"])
         self.__chain.append(converted_block)
         self.save_data()
